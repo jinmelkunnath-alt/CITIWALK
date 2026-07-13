@@ -1,0 +1,19 @@
+:root {
+  /* Semantic RGB tokens support Tailwind alpha modifiers. */
+  --color-canvas: 9 6 16;
+  --color-surface: 18 12 31;
+  --color-elevated: 27 18 45;
+  --color-ink: 248 247 252;
+  --color-muted: 174 167 191;
+  --color-line: 255 255 255;
+
+  --focus-ring: 167 121 255;
+  --nav-height: 5rem;
+  --container-width: 80rem;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --nav-height: 4.5rem;
+  }
+}
