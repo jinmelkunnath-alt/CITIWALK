@@ -1,42 +1,35 @@
-name: Firebase Deploy
+name: Firebase Deploy (Disabled)
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 permissions:
   contents: read
 
-concurrency:
-  group: firebase-deploy
-  cancel-in-progress: true
-
 jobs:
-  deploy:
+  disabled:
+    name: Firebase Deployment Disabled
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
+      - name: Deployment Notice
+        run: |
+          echo "========================================="
+          echo " Firebase deployment is currently disabled."
+          echo ""
+          echo " This project is still under development."
+          echo " Firebase Hosting deployment will be"
+          echo " enabled after:"
+          echo ""
+          echo " 1. Firebase project is created"
+          echo " 2. GitHub Secrets are configured"
+          echo " 3. Production environment is ready"
+          echo ""
+          echo " No deployment has been performed."
+          echo "========================================="
 
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build
-
-      - name: Deploy to Firebase Hosting
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          projectId: ${{ secrets.FIREBASE_PROJECT_ID }}
-          channelId: live
+      - name: Finish
+        run: echo "Workflow completed successfully."
