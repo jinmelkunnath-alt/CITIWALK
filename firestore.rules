@@ -1,0 +1,40 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Public settings are exposed only through a whitelisting Callable Function.
+    // Direct reads could reveal admin-only metadata such as updatedBy.
+    match /settings/{settingId} {
+      allow read, write: if false;
+    }
+
+    // Participant PII is never exposed to browser Firestore clients.
+    match /participants/{participantId} {
+      allow read, write: if false;
+    }
+
+    // Number availability and assignment are server-authoritative.
+    match /entryNumbers/{entryNumber} {
+      allow read, write: if false;
+    }
+
+    // Verification sessions and audit records are server-only.
+    match /logs/{logId} {
+      allow read, write: if false;
+    }
+
+    // The permanent winner draw is readable only through admin Cloud Functions.
+    match /winnerDraws/{drawId} {
+      allow read, write: if false;
+    }
+
+    // Server-maintained IP/device throttling state is never client-accessible.
+    match /rateLimits/{limitId} {
+      allow read, write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
